@@ -24,6 +24,8 @@
   <ItemGroup>
     <Compile Include="setup.py" />
     <Compile Include="traffix.py" />
+    <Compile Include="traffix\vision\image_retriever.py" />
+    <Compile Include="traffix\vision\vehicle_counter.py" />
     <Compile Include="traffix\vision\__init__.py" />
     <Compile Include="traffix\__init__.py" />
   </ItemGroup>
