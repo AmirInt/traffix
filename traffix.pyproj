@@ -24,6 +24,8 @@
   <ItemGroup>
     <Compile Include="setup.py" />
     <Compile Include="traffix.py" />
+    <Compile Include="traffix\utils\video_utils.py" />
+    <Compile Include="traffix\utils\__init__.py" />
     <Compile Include="traffix\vision\image_retriever.py" />
     <Compile Include="traffix\vision\vehicle_counter.py" />
     <Compile Include="traffix\vision\__init__.py" />
@@ -49,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="traffix\" />
+    <Folder Include="traffix\utils\" />
     <Folder Include="traffix\vision\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

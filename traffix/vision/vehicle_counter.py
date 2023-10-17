@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from ultralytics import YOLO
 from ultralytics.utils.plotting import Annotator
 from ultralytics.engine.results import Results
@@ -11,7 +11,7 @@ class VehicleCounter:
 
         self.__model = YOLO()
 
-    def process_frame(self, frame: numpy.ndarray):
+    def process_frame(self, frame: np.ndarray):
         pass
 
     def get_last_count(self):
