@@ -55,7 +55,7 @@ class ImageRetriever:
 
                 wait_time = legit_wait_time + 10 * int(current_fps - self.__fps)
                 if wait_time <= 0:
-                    wait_time = 3
+                    wait_time = 1
 
         except KeyboardInterrupt:
             print("Exiting...")
