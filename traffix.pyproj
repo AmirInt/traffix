@@ -35,6 +35,10 @@
     <Content Include=".gitattributes" />
     <Content Include=".gitignore" />
     <Content Include="CHANGES.md" />
+    <Content Include="data\sequence1_a_1.avi" />
+    <Content Include="data\sequence1_a_2.avi" />
+    <Content Include="data\sequence1_b_1.avi" />
+    <Content Include="data\sequence1_b_2.avi" />
     <Content Include="data\sequence2_1.avi" />
     <Content Include="data\sequence2_2.avi" />
     <Content Include="README.md" />

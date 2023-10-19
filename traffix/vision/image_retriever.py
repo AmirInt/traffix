@@ -6,7 +6,7 @@ from pympler.asizeof import asizeof
 
 
 class ImageRetriever:
-    def __init__(self, source="", history_size=2e+8, fps=30.0):
+    def __init__(self, source="", fps=30.0):
         if source == "":
             self.__source = cv.VideoCapture(0)
         else:
@@ -18,9 +18,7 @@ class ImageRetriever:
 
         cv.namedWindow("source", cv.WINDOW_AUTOSIZE)
 
-        self.__frames = []
-
-        self.__history_size = int(history_size)
+        self.__last_frame: np.ndarray
 
         self.__fps = fps
 
@@ -33,18 +31,16 @@ class ImageRetriever:
             frames_read = 0
             start_time = datetime.now()
             while True:
-                ret, frame = self.__source.read()
+                ret, self.__last_frame = self.__source.read()
 
                 if not ret:
                     print("Could not receive stream frame. Exiting...")
                     break
                 
-                rgb_frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+                self.__last_frame = cv.cvtColor(self.__last_frame, cv.COLOR_BGR2RGB)
 
                 if display:
-                    cv.imshow("source", rgb_frame)
-
-                self.append_to_history(frame)
+                    cv.imshow("source", self.__last_frame)
 
                 if cv.waitKey(wait_time) == ord('q'):
                     break
@@ -60,24 +56,15 @@ class ImageRetriever:
         except KeyboardInterrupt:
             print("Exiting...")
             self.stop()
-
-
-    def append_to_history(self, frame: np.ndarray):
-        self.__frames.append(frame)
-        while asizeof(self.__frames) > self.__history_size:
-            self.__frames.pop(0)
-
-
-    def set_history_size(self, history_size):
-        self.__history_size = history_size
-
+            
 
     def get_last_frame(self):
-        return self.__frames[-1]
+        return self.__last_frame
 
 
-    def get_all_frames(self):
-        return self.__frames
+    def display_frame(self, frame: np.ndarray):
+        cv.imshow("source", frame)
+        cv.waitKey(1)
 
 
     def stop(self):
