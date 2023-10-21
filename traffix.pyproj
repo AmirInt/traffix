@@ -41,6 +41,8 @@
     <Content Include="data\sequence1_b_2.avi" />
     <Content Include="data\sequence2_1.avi" />
     <Content Include="data\sequence2_2.avi" />
+    <Content Include="data\sequence3_1.avi" />
+    <Content Include="data\sequence3_2.avi" />
     <Content Include="README.md" />
     <Content Include="MANIFEST.in" />
   </ItemGroup>

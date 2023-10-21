@@ -367,3 +367,7 @@ env/
 
 # Datasets
 data/
+
+# YOLO weights except a light-weight one
+yolo_weights/*
+!yolo_weights/yolov8n.pt
