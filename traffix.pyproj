@@ -39,12 +39,22 @@
     <Content Include="data\sequence1_a_2.avi" />
     <Content Include="data\sequence1_b_1.avi" />
     <Content Include="data\sequence1_b_2.avi" />
+    <Content Include="data\sequence1_c_1.avi" />
+    <Content Include="data\sequence1_c_2.avi" />
+    <Content Include="data\sequence1_d_1.avi" />
+    <Content Include="data\sequence1_d_2.avi" />
     <Content Include="data\sequence2_1.avi" />
     <Content Include="data\sequence2_2.avi" />
     <Content Include="data\sequence3_1.avi" />
     <Content Include="data\sequence3_2.avi" />
     <Content Include="README.md" />
     <Content Include="MANIFEST.in" />
+    <Content Include="config.yaml" />
+    <Content Include="yolo_weights\yolov8l.pt" />
+    <Content Include="yolo_weights\yolov8m.pt" />
+    <Content Include="yolo_weights\yolov8n.pt" />
+    <Content Include="yolo_weights\yolov8s.pt" />
+    <Content Include="yolo_weights\yolov8x.pt" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">
@@ -59,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
+    <Folder Include="yolo_weights\" />
     <Folder Include="traffix\" />
     <Folder Include="traffix\utils\" />
     <Folder Include="traffix\vision\" />

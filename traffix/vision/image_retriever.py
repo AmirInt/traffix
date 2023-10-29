@@ -5,19 +5,19 @@ from datetime import datetime
 
 
 class ImageRetriever:
-    def __init__(self, source="", fps=30.0):
-        if source == "":
+    def __init__(self, source="", fps: float = 30.0):
+
+        if source == "camera":
             self._source = cv.VideoCapture(0)
         else:
             self._source = cv.VideoCapture(source)
 
         if not self._source.isOpened():
-            print("Could not access video source")
-            exit()
+            raise RuntimeError("Could not access video source")
 
         cv.namedWindow("source", cv.WINDOW_AUTOSIZE)
 
-        self._last_frame = np.zeros((1, 1, 3))
+        self._last_frame: np.ndarray = None
 
         self._fps = fps
 
@@ -30,17 +30,16 @@ class ImageRetriever:
             frames_read = 0
             start_time = datetime.now()
             while True:
-                ret, self._last_frame = self._source.read()
+                ret, frame = self._source.read()
 
                 if not ret:
-                    print("Could not receive stream frame. Exiting...")
-                    break
+                    raise RuntimeError("Could not receive stream frame. Exiting...")
                 
-                self._last_frame = cv.cvtColor(self._last_frame, cv.COLOR_BGR2RGB)
+                self._last_frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
 
                 if display:
                     cv.imshow("source", self._last_frame)
-
+                
                 if cv.waitKey(wait_time) == ord('q'):
                     break
                 
@@ -62,7 +61,7 @@ class ImageRetriever:
 
 
     def display_frame(self, frame: np.ndarray):
-        cv.imshow("source", frame)
+        cv.imshow("source", cv.cvtColor(frame, cv.COLOR_RGB2BGR))
         cv.waitKey(1)
 
 
