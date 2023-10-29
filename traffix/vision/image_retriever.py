@@ -1,11 +1,12 @@
 import numpy as np
 import cv2 as cv
 
+from os import PathLike
 from datetime import datetime
 
 
 class ImageRetriever:
-    def __init__(self, source="", fps: float = 30.0):
+    def __init__(self, name: str = "source", source: PathLike = "", fps: float = 30.0):
 
         if source == "camera":
             self._source = cv.VideoCapture(0)
@@ -15,7 +16,7 @@ class ImageRetriever:
         if not self._source.isOpened():
             raise RuntimeError("Could not access video source")
 
-        cv.namedWindow("source", cv.WINDOW_AUTOSIZE)
+        cv.namedWindow(name, cv.WINDOW_AUTOSIZE)
 
         self._last_frame: np.ndarray = None
 

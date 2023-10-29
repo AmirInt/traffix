@@ -1,0 +1,21 @@
+views:
+    -
+        name: north
+        source: data/sequence1_a_1.avi
+        roi:
+            x1: 0
+            x2: 300
+            y1: 0
+            y2: 300
+        fps: 25.01
+    -
+        name: south
+        source: data/sequence1_a_2.avi
+        roi:
+            x1: 0
+            x2: 300
+            y1: 0
+            y2: 300
+        fps: 25.01
+vehicle_counter:
+    yolo_weigths: yolo_weights/yolov8x.pt    
