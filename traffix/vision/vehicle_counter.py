@@ -4,6 +4,8 @@ from ultralytics import YOLO
 from ultralytics.utils.plotting import Annotator
 from ultralytics.engine.results import Results
 
+from traffix.vision.image_retriever import ImageRetriever
+
 
 class VehicleCounter:
     def __init__(self, yolo_model: os.PathLike = "", roi: tuple = ()):
@@ -19,6 +21,8 @@ class VehicleCounter:
         self._model = YOLO(yolo_model)
         
         self._roi = roi
+
+        self._running = False
 
 
     def process_frame(self, frame: np.ndarray) -> Results:
@@ -38,5 +42,20 @@ class VehicleCounter:
         return results
 
 
+    def process_source(self, source: ImageRetriever):
+        self._running = True
+
+        try:
+            while self._running:
+                results = self.process_frame(source.get_last_frame())
+                if results is not None:
+                    source.display_frame(results[0].plot())
+        except KeyboardInterrupt:
+            print("Finishing")
+
     def get_last_count(self):
         return self._count()
+
+
+    def stop(self):
+        self._running = False
