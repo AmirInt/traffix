@@ -55,7 +55,7 @@ class ImageRetriever:
                 if wait_time <= 0:
                     wait_time = 1
 
-        except (KeyboardInterrupt, InterruptedError, RuntimeError) as e:
+        except (KeyboardInterrupt, InterruptedError, RuntimeError, cv.error) as e:
             print(e)
             print("Exiting...")
             self.stop()

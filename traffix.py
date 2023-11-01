@@ -1,14 +1,14 @@
 import yaml
-
+import torch
 import numpy as np
 from threading import Thread
 from time import sleep
-from traffix.vision.image_retriever import ImageRetriever
-from traffix.vision.vehicle_counter import VehicleCounter
+from traffix.vision.image_retrieving import ImageRetriever
+from traffix.vision.vehicle_counting import VehicleCounter
 
 
 if __name__ == "__main__":
-
+    
     try:
         with open("config.yaml") as file:
             try:
@@ -30,16 +30,22 @@ if __name__ == "__main__":
         
             roi = ((view["roi"]["y1"], view["roi"]["y2"]), (view["roi"]["x1"], view["roi"]["x2"]))
         
-            vehicle_counters.append(VehicleCounter(config["vehicle_counter"]["yolo_weights"], roi))
+            vehicle_counters.append(
+                VehicleCounter(
+                    config["vehicle_counter"]["yolo_weights"],
+                    roi,
+                    config["vehicle_counter"]["target_classes"]
+                    )
+                )
 
             vehicle_counter_threads.append(Thread(target=vehicle_counters[-1].process_source, args=[videos[-1]]))
         
-            vehicle_counter_threads[-1].setDaemon(True)
+            vehicle_counter_threads[-1].daemon = True
             vehicle_counter_threads[-1].start()
         
 
         for video_thread in video_threads:
-            video_thread.setDaemon(True)
+            video_thread.daemon = True
             video_thread.start()
     
         while True:

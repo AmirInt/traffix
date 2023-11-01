@@ -26,8 +26,8 @@
     <Compile Include="traffix.py" />
     <Compile Include="traffix\utils\video_utils.py" />
     <Compile Include="traffix\utils\__init__.py" />
-    <Compile Include="traffix\vision\image_retriever.py" />
-    <Compile Include="traffix\vision\vehicle_counter.py" />
+    <Compile Include="traffix\vision\image_retrieving.py" />
+    <Compile Include="traffix\vision\vehicle_counting.py" />
     <Compile Include="traffix\vision\__init__.py" />
     <Compile Include="traffix\__init__.py" />
   </ItemGroup>

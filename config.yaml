@@ -18,4 +18,10 @@ views:
             y2: 300
         fps: 25.01
 vehicle_counter:
-    yolo_weights: yolo_weights/yolov8x.pt    
+    yolo_weights: yolo_weights/yolov8x.pt
+    target_classes:
+        - car
+        - truck
+        - bus
+        - motorcycle
+    min_dir_prob: 0.6
