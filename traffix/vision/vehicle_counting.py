@@ -32,17 +32,17 @@ class VehicleCounter:
 
     def process_frame(self, frame: np.ndarray) -> Results:
         if frame is None:
-            print("Vehicle counter: skipping invalid data...")
+            print("Skipping invalid data...")
             return None
-    
-        # Crop the frame if ROI specified
-        target_frame = frame[
-            self._roi[0][0]:self._roi[0][1],
-            self._roi[1][0]:self._roi[1][1],
-            :
-        ]
-            
-        results = self._model.track(target_frame, persist=True, verbose=False)
+        
+        results = self._model.track(
+            frame[
+                self._roi[0][0]:self._roi[0][1],
+                self._roi[1][0]:self._roi[1][1],
+                :],
+            persist=True,
+            verbose=False)
+
         return results
 
 
