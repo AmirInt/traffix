@@ -1,13 +1,13 @@
 views:
-    -
-        name: north
-        source: data/sequence1_a_1.avi
-        roi:
-            x1: 0
-            x2: 300
-            y1: 0
-            y2: 300
-        fps: 25.01
+    #-
+    #    name: north
+    #    source: data/sequence1_a_1.avi
+    #    roi:
+    #        x1: 0
+    #        x2: 300
+    #        y1: 0
+    #        y2: 300
+    #    fps: 25.01
     -
         name: south
         source: data/sequence1_a_2.avi
@@ -15,7 +15,7 @@ views:
             x1: 0
             x2: 300
             y1: 0
-            y2: 300
+            y2: 200
         fps: 25.01
 vehicle_counter:
     yolo_weights: yolo_weights/yolov8x.pt
@@ -24,4 +24,3 @@ vehicle_counter:
         - truck
         - bus
         - motorcycle
-    min_dir_prob: 0.6

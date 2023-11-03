@@ -24,22 +24,26 @@ if __name__ == "__main__":
     
         for view in config["views"]:
         
-            videos.append(ImageRetriever(view["name"], view["source"], float(view["fps"])))
+            videos.append(
+                ImageRetriever(
+                    view["name"],
+                    view["source"],
+                    float(view["fps"])))
 
             video_threads.append(Thread(target=videos[-1].play_source))
         
-            roi = ((view["roi"]["y1"], view["roi"]["y2"]), (view["roi"]["x1"], view["roi"]["x2"]))
+            roi = ((view["roi"]["y1"], view["roi"]["y2"]),
+                  (view["roi"]["x1"], view["roi"]["x2"]))
         
             vehicle_counters.append(
                 VehicleCounter(
                     config["vehicle_counter"]["yolo_weights"],
                     roi,
-                    config["vehicle_counter"]["target_classes"],
-                    config["vehicle_counter"]["min_dir_prob"]
-                    )
-                )
+                    config["vehicle_counter"]["target_classes"]))
 
-            vehicle_counter_threads.append(Thread(target=vehicle_counters[-1].process_source, args=[videos[-1]]))
+            vehicle_counter_threads.append(
+                Thread(
+                    target=vehicle_counters[-1].process_source, args=[videos[-1]]))
         
             vehicle_counter_threads[-1].daemon = True
             vehicle_counter_threads[-1].start()
