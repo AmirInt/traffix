@@ -59,7 +59,6 @@ class ImageRetriever:
             print(e)
             print("Exiting...")
             self.stop()
-            print("Done")
             
 
     def get_last_frame(self) -> np.ndarray:

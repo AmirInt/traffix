@@ -34,7 +34,8 @@ if __name__ == "__main__":
                 VehicleCounter(
                     config["vehicle_counter"]["yolo_weights"],
                     roi,
-                    config["vehicle_counter"]["target_classes"]
+                    config["vehicle_counter"]["target_classes"],
+                    config["vehicle_counter"]["min_dir_prob"]
                     )
                 )
 
