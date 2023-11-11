@@ -59,13 +59,13 @@ class VehicleCounter:
         if len(roi) != 2 or len(roi[0]) != 2 or len(roi[1]) != 2:
             raise ValueError("ROI not properly set")
 
-        self._count = 0
         self._model = YOLO(yolo_model)
         self._annotator = Annotator(np.ndarray(shape=(1, 1, 1)))
         self._roi = roi
         self._target_classes = target_classes
         self._running = False
         self._track_history = {}
+        self._passing_vehicles_id_set = set({})
 
 
     def process_frame(self, frame: np.ndarray) -> Results:
@@ -124,7 +124,7 @@ class VehicleCounter:
 
 
     def filter_results(self, boxes: Boxes) -> Boxes:
-        pass
+        return self.filter_direction(self.filter_class(boxes))
 
 
     def process_source(self, source: ImageRetriever) -> None:
@@ -135,8 +135,11 @@ class VehicleCounter:
                 frame = source.get_last_frame()
                 results = self.process_frame(frame)
                 if results is not None:
-                    filtered_boxes = self.filter_class(results[0].boxes)
-                    filtered_boxes = self.filter_direction(filtered_boxes)
+                    filtered_boxes = self.filter_results(results[0].boxes)
+
+                    self._passing_vehicles_id_set.update([int(box.id) for box in results[0].boxes])
+
+                    print(self._passing_vehicles_id_set)
 
                     self._annotator.im = frame
                     for box in filtered_boxes:
@@ -151,7 +154,11 @@ class VehicleCounter:
 
 
     def get_last_count(self) -> int:
-        return self._count()
+        return len(self._passing_vehicles_id_set)
+
+
+    def clear_count(self) -> None:
+        self._passing_vehicles_id_set.clear()
 
 
     def stop(self) -> None:
