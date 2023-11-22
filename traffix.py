@@ -7,6 +7,8 @@ from traffix.vision.image_retrieving import ImageRetriever
 from traffix.vision.vehicle_counting import VehicleCounter
 
 
+
+
 if __name__ == "__main__":
     
     try:

@@ -24,6 +24,8 @@
   <ItemGroup>
     <Compile Include="setup.py" />
     <Compile Include="traffix.py" />
+    <Compile Include="traffix\prediction\time_series.py" />
+    <Compile Include="traffix\prediction\__init__.py" />
     <Compile Include="traffix\utils\video_utils.py" />
     <Compile Include="traffix\utils\__init__.py" />
     <Compile Include="traffix\vision\image_retrieving.py" />
@@ -69,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
+    <Folder Include="traffix\prediction\" />
     <Folder Include="yolo_weights\" />
     <Folder Include="traffix\" />
     <Folder Include="traffix\utils\" />

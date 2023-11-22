@@ -7,6 +7,8 @@ from ultralytics.engine.results import Boxes
 from traffix.vision.image_retrieving import ImageRetriever
 
 
+
+
 class Detection:
     def __init__(
             self,
