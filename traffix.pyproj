@@ -23,6 +23,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="setup.py" />
+    <Compile Include="test\test_time_series_train.py" />
+    <Compile Include="test\test_time_series_predict.py" />
     <Compile Include="traffix.py" />
     <Compile Include="traffix\prediction\time_series.py" />
     <Compile Include="traffix\prediction\__init__.py" />
@@ -71,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
+    <Folder Include="test\" />
     <Folder Include="traffix\prediction\" />
     <Folder Include="yolo_weights\" />
     <Folder Include="traffix\" />

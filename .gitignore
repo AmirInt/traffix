@@ -371,3 +371,8 @@ data/
 # YOLO weights except a light-weight one
 yolo_weights/*
 !yolo_weights/yolov8n.pt
+
+# Test files
+test/*
+!test/test_time_series_predict.py
+!test/test_time_series_train.py
