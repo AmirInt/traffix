@@ -5,8 +5,8 @@ sys.path.append("D:\\projects\\traffix\\")
 import traffix.prediction.time_series as time_series
 
 
-data_csv = "north.csv"
-model_filename = "model_8_1_trained.torch"
+data_csv = "test/north.csv"
+model_filename = "test/model_8_1_trained.torch"
 model_hidden_size = 8
 
 if __name__ == "__main__":

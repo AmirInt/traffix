@@ -28,6 +28,7 @@
     <Compile Include="traffix.py" />
     <Compile Include="traffix\prediction\time_series.py" />
     <Compile Include="traffix\prediction\__init__.py" />
+    <Compile Include="traffix\utils\time_series_utils.py" />
     <Compile Include="traffix\utils\video_utils.py" />
     <Compile Include="traffix\utils\__init__.py" />
     <Compile Include="traffix\vision\image_retrieving.py" />

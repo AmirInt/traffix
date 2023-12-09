@@ -1,6 +1,4 @@
 import yaml
-import torch
-import numpy as np
 from threading import Thread
 from time import sleep
 from traffix.vision.image_retrieving import ImageRetriever

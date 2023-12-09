@@ -17,6 +17,7 @@ views:
             y1: 0
             y2: 200
         fps: 25.01
+
 vehicle_counter:
     yolo_weights: yolo_weights/yolov8x.pt
     target_classes:
@@ -24,3 +25,8 @@ vehicle_counter:
         - truck
         - bus
         - motorcycle
+
+traffic_predictors:
+    
+    name: north
+    model_weights: 
