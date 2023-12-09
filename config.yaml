@@ -27,6 +27,14 @@ vehicle_counter:
         - motorcycle
 
 traffic_predictors:
-    
-    name: north
-    model_weights: 
+    - 
+        name: north
+        model_weights: predictor_weights
+        initial_data: data/north.csv
+
+
+
+
+
+
+

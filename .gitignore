@@ -366,7 +366,11 @@ FodyWeavers.xsd
 env/
 
 # Datasets
-data/
+data/*
+!data/north.csv
+!data/south.csv
+!data/east.csv
+!data/west.csv
 
 # YOLO weights except a light-weight one
 yolo_weights/*

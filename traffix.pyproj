@@ -52,6 +52,14 @@
     <Content Include="data\sequence2_2.avi" />
     <Content Include="data\sequence3_1.avi" />
     <Content Include="data\sequence3_2.avi" />
+    <Content Include="predictor_weights\east\168_1\model_168_1.torch" />
+    <Content Include="predictor_weights\east\8_1\model_8_1.torch" />
+    <Content Include="predictor_weights\north\168_1\model_168_1.torch" />
+    <Content Include="predictor_weights\north\8_1\model_8_1.torch" />
+    <Content Include="predictor_weights\south\168_1\model_168_1.torch" />
+    <Content Include="predictor_weights\south\8_1\model_8_1.torch" />
+    <Content Include="predictor_weights\west\168_1\model_168_1.torch" />
+    <Content Include="predictor_weights\west\8_1\model_8_1.torch" />
     <Content Include="README.md" />
     <Content Include="MANIFEST.in" />
     <Content Include="config.yaml" />
@@ -74,6 +82,19 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
+    <Folder Include="predictor_weights\" />
+    <Folder Include="predictor_weights\east\" />
+    <Folder Include="predictor_weights\east\168_1\" />
+    <Folder Include="predictor_weights\east\8_1\" />
+    <Folder Include="predictor_weights\north\" />
+    <Folder Include="predictor_weights\north\168_1\" />
+    <Folder Include="predictor_weights\north\8_1\" />
+    <Folder Include="predictor_weights\south\" />
+    <Folder Include="predictor_weights\south\168_1\" />
+    <Folder Include="predictor_weights\south\8_1\" />
+    <Folder Include="predictor_weights\west\" />
+    <Folder Include="predictor_weights\west\168_1\" />
+    <Folder Include="predictor_weights\west\8_1\" />
     <Folder Include="test\" />
     <Folder Include="traffix\prediction\" />
     <Folder Include="yolo_weights\" />
