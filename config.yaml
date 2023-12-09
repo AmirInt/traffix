@@ -1,13 +1,13 @@
 views:
-    #-
-    #    name: north
-    #    source: data/sequence1_a_1.avi
-    #    roi:
-    #        x1: 0
-    #        x2: 300
-    #        y1: 0
-    #        y2: 300
-    #    fps: 25.01
+    -
+        name: north
+        source: data/sequence1_a_1.avi
+        roi:
+            x1: 0
+            x2: 300
+            y1: 0
+            y2: 300
+        fps: 25.01
     -
         name: south
         source: data/sequence1_a_2.avi
@@ -17,6 +17,27 @@ views:
             y1: 0
             y2: 200
         fps: 25.01
+
+    -
+        name: east
+        source: data/sequence1_a_2.avi
+        roi:
+            x1: 0
+            x2: 300
+            y1: 0
+            y2: 200
+        fps: 25.01
+
+    -
+        name: west
+        source: data/sequence1_a_2.avi
+        roi:
+            x1: 0
+            x2: 300
+            y1: 0
+            y2: 200
+        fps: 25.01
+
 
 vehicle_counter:
     yolo_weights: yolo_weights/yolov8x.pt
@@ -29,12 +50,37 @@ vehicle_counter:
 traffic_predictors:
     - 
         name: north
-        model_weights: predictor_weights
+        model_weights: predictor_weights/north/8_1/model_8_1.torch
         initial_data: data/north.csv
 
+    - 
+        name: south
+        model_weights: predictor_weights/south/8_1/model_8_1.torch
+        initial_data: data/south.csv
 
+    - 
+        name: east
+        model_weights: predictor_weights/east/8_1/model_8_1.torch
+        initial_data: data/east.csv
 
+    - 
+        name: west
+        model_weights: predictor_weights/west/8_1/model_8_1.torch
+        initial_data: data/west.csv
 
-
-
-
+scheduler:
+    lines:
+        - line1
+        - line2
+    line1_constituents:
+        - 1 # north
+        - 2 # south
+    line2_constituents:
+        - 3 # east
+        - 4 # west
+    # Coefficients must add up to one
+    view_coefficient: 0.45
+    predictor_coefficient: 0.45
+    const_coefficient: 0.1
+    
+    schedule_period: 1 # min
