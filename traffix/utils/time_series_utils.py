@@ -150,3 +150,7 @@ class DataProcessor:
         data_range = data_range.reshape(-1, 1)
 
         return data_range
+
+
+    def append_data_point(self, new_data_point: float) -> None:
+        self._df.loc[self._df.shape[0]] = [self._df.shape[0], new_data_point]
