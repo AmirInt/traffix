@@ -144,9 +144,13 @@ class DataProcessor:
         return y[y_range[0]:y_range[1]]
 
 
-    def get_range(self, range: tuple) -> np.ndarray:
-        data_range = self._df[self._vehicle_count_title][range[0]:range[1]].to_numpy()
+    def get_range(self, range_indices: tuple) -> np.ndarray:
+        if len(range_indices) == 2:
+            data_range = self._df[self._vehicle_count_title][range_indices[0]:range_indices[1]].to_numpy()
 
+        else
+            data_range = self._df[self._vehicle_count_title][range_indices[0]:].to_numpy()
+            
         data_range = data_range.reshape(-1, 1)
 
         return data_range

@@ -3,6 +3,8 @@ from threading import Thread
 from time import sleep
 from traffix.vision.image_retrieving import ImageRetriever
 from traffix.vision.vehicle_counting import VehicleCounter
+from traffix.utils.time_series_utils import DataProcessor
+from traffix.prediction.time_series import Predictor
 
 
 
@@ -21,7 +23,10 @@ if __name__ == "__main__":
         video_threads = []
         vehicle_counters = []
         vehicle_counter_threads = []
+        traffic_count_recorders = []
+        traffic_predictors = []
     
+        # Initialise video sources and traffic viewers
         for view in config["views"]:
         
             videos.append(
@@ -42,12 +47,40 @@ if __name__ == "__main__":
                     config["vehicle_counter"]["target_classes"]))
 
             vehicle_counter_threads.append(
-                Thread(
-                    target=vehicle_counters[-1].process_source, args=[videos[-1]]))
+                Thread(target=vehicle_counters[-1].process_source,
+                       args=[videos[-1]]))
         
             vehicle_counter_threads[-1].daemon = True
             vehicle_counter_threads[-1].start()
         
+        # Initialise traffic count data and predictors
+        history_depth = config["traffic_predictor"]["history_depth"]
+        prediction_depth = config["traffic_predictor"]["prediction_size"]
+        hidden_size= config["traffic_predictor"]["hidden_size"]
+        num_stacked_layers = config["traffic_predictor"]["num_stacked_layers"]
+
+        for predictor in config["traffic_predictors"]:
+            traffic_count_recorders.append(DataProcessor(
+                data_csv=predictor["initial_data"],
+                n_lookback=history_depth,
+                n_predict=prediction_depth,
+                index_title="index",
+                vehicle_count_title="vehicle_count"))
+            
+            traffic_count_recorders[-1].fit_self()
+
+            traffic_predictors.append(Predictor(
+                1,
+                output_size=prediction_depth,
+                hidden_size=hidden_size,
+                num_stacked_layers=num_stacked_layers,
+                n_lookback=history_depth,
+                n_predict=prediction_depth))
+
+            traffic_predictors[-1].load_model(predictor["model_weights"])
+
+        # Initialise the scheduler module
+
 
         for video_thread in video_threads:
             video_thread.daemon = True

@@ -67,6 +67,7 @@ class VehicleCounter:
         self._target_classes = target_classes
         self._running = False
         self._track_history = {}
+        self._current_vehicle_count = 0
         self._passing_vehicles_id_set = set({})
 
 
@@ -141,7 +142,7 @@ class VehicleCounter:
 
                     self._passing_vehicles_id_set.update([int(box.id) for box in results[0].boxes])
 
-                    print(self._passing_vehicles_id_set)
+                    self._current_vehicle_count = len(filtered_boxes)
 
                     self._annotator.im = frame
                     for box in filtered_boxes:
@@ -153,6 +154,10 @@ class VehicleCounter:
 
         except KeyboardInterrupt:
             print("Finishing...")
+
+
+    def get_current_count(self) -> int:
+        return self._current_vehicle_count
 
 
     def get_last_count(self) -> int:

@@ -8,6 +8,7 @@ views:
             y1: 0
             y2: 300
         fps: 25.01
+
     -
         name: south
         source: data/sequence1_a_2.avi
@@ -20,7 +21,7 @@ views:
 
     -
         name: east
-        source: data/sequence1_a_2.avi
+        source: data/sequence1_b_1.avi
         roi:
             x1: 0
             x2: 300
@@ -30,7 +31,7 @@ views:
 
     -
         name: west
-        source: data/sequence1_a_2.avi
+        source: data/sequence1_b_2.avi
         roi:
             x1: 0
             x2: 300
@@ -46,6 +47,7 @@ vehicle_counter:
         - truck
         - bus
         - motorcycle
+
 
 traffic_predictors:
     - 
@@ -68,19 +70,20 @@ traffic_predictors:
         model_weights: predictor_weights/west/8_1/model_8_1.torch
         initial_data: data/west.csv
 
+
+traffic_predictor:
+    history_depth: 672
+    prediction_depth: 24
+    hidden_size: 8
+    num_stacked_layers: 1
+
+
 scheduler:
-    lines:
-        - line1
-        - line2
-    line1_constituents:
-        - 1 # north
-        - 2 # south
-    line2_constituents:
-        - 3 # east
-        - 4 # west
-    # Coefficients must add up to one
-    view_coefficient: 0.45
-    predictor_coefficient: 0.45
-    const_coefficient: 0.1
-    
-    schedule_period: 1 # min
+    paths: 2 # The two opposite lines having identical timings
+    path_0:
+        - 0 # North
+        - 1 # South
+    path_1:
+        - 2 # East
+        - 3 # West
+    schedule_period: 30 # seconds
