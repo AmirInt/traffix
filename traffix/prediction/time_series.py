@@ -3,7 +3,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from traffix.utils.time_series_utils import DataProcessor
+from traffix.utils.time_series_utils import DataProcessor, DataLoader
 
 
 
@@ -29,7 +29,7 @@ class LSTM(nn.Module):
         self.device = device
 
 
-    def forward(self, x) -> torch.Tensor:
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         batch_size = x.size(0)
         h0 = torch.zeros(self.num_stacked_layers,
                          batch_size,
@@ -51,27 +51,18 @@ class LSTM(nn.Module):
 
 class Predictor:
     def __init__(self,
-                 data_csv_file: os.PathLike,
-                 model_filename: os.PathLike,
                  input_size: int = 1,
                  output_size: int = 24,
                  hidden_size: int = 8,
                  num_stacked_layers: int = 1,
                  n_lookback: int = 672,
-                 n_predict: int = 24,
-                 index_title: str = "index",
-                 vehicle_count_title: str = "vehicle_count") -> None:
+                 n_predict: int = 24) -> None:
 
         self._device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
         print(f"Predictor device: {self._device}")
 
-        self._model_filename = model_filename
-
         self._output_size = output_size
-
-        self._n_lookback = n_lookback
-        self._n_predict = n_predict
 
         self._lstm = LSTM(input_size,
                           output_size,
@@ -81,29 +72,15 @@ class Predictor:
         
         self._lstm.to(self._device)
 
-        # Getting and preprocessing data
-        self._data_processor = DataProcessor(data_csv_file,
-                                             n_lookback,
-                                             n_predict,
-                                             index_title,
-                                             vehicle_count_title)
-
-        self._data_processor.prepare_dataset_for_lstm()
-        self._data_processor.scale_data()
-        self._data_processor.extract_x_y()
-
         print("Predictor loaded")
 
         
     def train_model(self,
-                    batch_size: int = 512,
-                    train_ratio: float = 0.9,
+                    model_filename: os.PathLike,
+                    train_loader: DataLoader,
+                    test_loader: DataLoader,
                     learning_rate: float = 0.004,
                     num_epochs: int = 30) -> tuple:
-        
-        train_loader, test_loader = self._data_processor.get_train_datasets(
-            batch_size,
-            train_ratio)
         
         # Set training parameters
         loss_function = nn.MSELoss()
@@ -149,7 +126,7 @@ class Predictor:
             validation_losses.append(avg_loss_across_batches)
 
             if avg_loss_across_batches < best_val_loss:
-                torch.save(self._lstm.state_dict(), self._model_filename)
+                torch.save(self._lstm.state_dict(), model_filename)
                 best_val_loss = avg_loss_across_batches
 
             print(f"Val loss: {avg_loss_across_batches}")
@@ -169,27 +146,8 @@ class Predictor:
         print("Predictor loaded model specs from file")
 
 
-    def predict(self, index: int) -> np.ndarray:
+    def predict(self, input_data: np.ndarray) -> np.ndarray:
         with torch.no_grad():
-            predicted = self._lstm(
-                self._data_processor.get_x_range((index, index + 1)).to(self._device)).to("cpu").numpy()
+            predicted = self._lstm(input_data.to(self._device)).to("cpu").numpy()
 
-        return self._data_processor.reverse_scale_data(predicted)
-
-
-    def predict_range(self, data_range: tuple) -> np.ndarray:
-        with torch.no_grad():
-            predicted = self._lstm(
-                self._data_processor.get_x_range(data_range).to(self._device)).to("cpu").numpy()
-
-        return self._data_processor.reverse_scale_data(predicted)
-
-    
-    def get_x_range(self, x_range: tuple) -> torch.Tensor:
-        return self._data_processor.reverse_scale_data(
-            self._data_processor.get_x_range(x_range))
-
-
-    def get_y_range(self, y_range: tuple) -> torch.Tensor:
-        return self._data_processor.reverse_scale_data(
-            self._data_processor.get_y_range(y_range))
+        return predicted

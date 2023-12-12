@@ -40,6 +40,8 @@
     <Content Include=".gitattributes" />
     <Content Include=".gitignore" />
     <Content Include="CHANGES.md" />
+    <Content Include="data\east.csv" />
+    <Content Include="data\north.csv" />
     <Content Include="data\sequence1_a_1.avi" />
     <Content Include="data\sequence1_a_2.avi" />
     <Content Include="data\sequence1_b_1.avi" />
@@ -52,6 +54,8 @@
     <Content Include="data\sequence2_2.avi" />
     <Content Include="data\sequence3_1.avi" />
     <Content Include="data\sequence3_2.avi" />
+    <Content Include="data\south.csv" />
+    <Content Include="data\west.csv" />
     <Content Include="predictor_weights\east\168_1\model_168_1.torch" />
     <Content Include="predictor_weights\east\8_1\model_8_1.torch" />
     <Content Include="predictor_weights\north\168_1\model_168_1.torch" />
