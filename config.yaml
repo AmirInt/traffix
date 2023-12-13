@@ -4,9 +4,9 @@ views:
         source: data/sequence1_a_1.avi
         roi:
             x1: 0
-            x2: 300
+            x2: 200
             y1: 0
-            y2: 300
+            y2: 200
         fps: 25.01
 
     -
@@ -24,7 +24,7 @@ views:
         source: data/sequence1_b_1.avi
         roi:
             x1: 0
-            x2: 300
+            x2: 200
             y1: 0
             y2: 200
         fps: 25.01
