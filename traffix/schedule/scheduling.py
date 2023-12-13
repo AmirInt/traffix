@@ -1,6 +1,6 @@
 import numpy as np
 import time
-import threading
+from threading import Thread
 
 
 
@@ -20,6 +20,7 @@ class Scheduler:
 
 
     def get_traffic_counts(self, idx: int, line: tuple) -> None:
+
         current_vehicle_count = line[0].get_current_count()
         line[1].append_data_point(line[0].get_last_count())
         line[0].clear_count()
@@ -38,7 +39,7 @@ class Scheduler:
 
     def calculate_timings(self) -> None:
         idx = 0
-        self._timings.fill(0.0)
+        self._traffic_counts.fill(0.0)
             
         for path in self._paths:
             
@@ -46,14 +47,28 @@ class Scheduler:
                     
                 self.get_traffic_counts(idx, line)
 
-            timin_idx += 1
+            idx += 1
+        
+        print("Current and predicted vehicle count:")
+        print(self._traffic_counts)
         
         total_count = np.sum(self._traffic_counts)
+        print("Total count:", total_count)
+
         self._timings = np.sum(self._traffic_counts, axis=1) / total_count
+
+        self._timings *= self._schedule_period
+
+        self._timings = np.round(self._timings)
+
+        print("Schedule:")
+        print(self._timings)
 
 
     def run_schedule(self) -> None:
         while True:
-
+            calculator_thread = Thread(target=self.calculate_timings)
+            calculator_thread.daemon = True
+            calculator_thread.start()
 
             time.sleep(self._schedule_period)

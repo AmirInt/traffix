@@ -3,6 +3,7 @@ import cv2 as cv
 
 from os import PathLike
 from datetime import datetime
+from time import sleep
 
 
 
@@ -37,17 +38,17 @@ class ImageRetriever:
             start_time = datetime.now()
             while self._running:
                 ret, frame = self._source.read()
-
                 if not ret:
-                    raise RuntimeError("Could not receive stream frame.")
+                    break
                 
                 self._last_frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
 
                 if display:
                     cv.imshow(self._name, self._last_frame)
-                
-                if cv.waitKey(wait_time) == ord('q'):
-                    break
+                    if cv.waitKey(wait_time) == ord('q'):
+                        break
+                else:
+                    sleep(wait_time / 1000.0)
                 
                 frames_read += 1
                 time_delta = (datetime.now() - start_time).total_seconds()
@@ -56,22 +57,20 @@ class ImageRetriever:
                 wait_time = legit_wait_time + 10 * int(current_fps - self._fps)
                 if wait_time <= 0:
                     wait_time = 1
-
-        except (KeyboardInterrupt, InterruptedError, RuntimeError, cv.error) as e:
-            print(e)
-            print("Exiting...")
-            self.stop()
             
+        except (KeyboardInterrupt, InterruptedError, RuntimeError, cv.error):
+            pass
+
 
     def get_last_frame(self) -> np.ndarray:
         return self._last_frame
 
 
     def display_frame(self, frame: np.ndarray):
-        cv.imshow(self._name, cv.cvtColor(frame, cv.COLOR_RGB2BGR))
-        if cv.waitKey(1) == ord('q'):
-            self.stop()
-
+        if self._running:
+            cv.imshow(self._name, cv.cvtColor(frame, cv.COLOR_RGB2BGR))
+            cv.waitKey(1)
+            
 
     def stop(self):
         self._running = False

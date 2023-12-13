@@ -148,7 +148,7 @@ class DataProcessor:
         if len(range_indices) == 2:
             data_range = self._df[self._vehicle_count_title][range_indices[0]:range_indices[1]].to_numpy()
 
-        else
+        else:
             data_range = self._df[self._vehicle_count_title][range_indices[0]:].to_numpy()
             
         data_range = data_range.reshape(-1, 1)

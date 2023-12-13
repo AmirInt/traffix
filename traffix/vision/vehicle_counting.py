@@ -73,7 +73,6 @@ class VehicleCounter:
 
     def process_frame(self, frame: np.ndarray) -> Results:
         if frame is None:
-            print("Skipping invalid data...")
             return None
         
         results = self._model.track(
@@ -87,19 +86,26 @@ class VehicleCounter:
         return results
 
 
-    def filter_class(self, boxes: Boxes) -> Boxes:
+    def filter_class(self, boxes: Boxes) -> Boxes | None:
         if len(self._target_classes) == 0:
             return boxes
-
-        filtered_boxes = Boxes(
-            np.array(
-                [box.data for box in boxes if self._model.names[int(box.cls)] in self._target_classes]),
-                boxes.orig_shape)
         
-        return filtered_boxes
+        boxes_np = np.array(
+                [box.data for box in boxes if self._model.names[int(box.cls)] in self._target_classes])
+
+        if boxes_np.shape[0]:
+            filtered_boxes = Boxes(
+                boxes_np,
+                boxes.orig_shape)
+            return filtered_boxes
+        
+        return None
 
 
-    def filter_direction(self, boxes: Boxes) -> Boxes:
+    def filter_direction(self, boxes: Boxes | None) -> Boxes:
+        if boxes is None:
+            return None
+        
         track_history = {}
         filtered_boxes = []
 
@@ -126,7 +132,7 @@ class VehicleCounter:
         return Boxes(np.array(filtered_boxes), boxes.orig_shape)
 
 
-    def filter_results(self, boxes: Boxes) -> Boxes:
+    def filter_results(self, boxes: Boxes) -> Boxes | None:
         return self.filter_direction(self.filter_class(boxes))
 
 
@@ -140,15 +146,19 @@ class VehicleCounter:
                 if results is not None:
                     filtered_boxes = self.filter_results(results[0].boxes)
 
-                    self._passing_vehicles_id_set.update([int(box.id) for box in results[0].boxes])
+                    if filtered_boxes is None:
+                        self._current_vehicle_count = 0
+                    else:
+                        self._passing_vehicles_id_set.update([int(box.id) for box in results[0].boxes])
 
-                    self._current_vehicle_count = len(filtered_boxes)
+                        self._current_vehicle_count = len(filtered_boxes)
 
-                    self._annotator.im = frame
-                    for box in filtered_boxes:
-                        self._annotator.box_label(
-                            box.xyxy[0],
-                            self._model.names[int(box.cls)])
+                        self._annotator.im = frame
+                        for box in filtered_boxes:
+                            self._annotator.box_label(
+                                box.xyxy[0],
+                                self._model.names[int(box.cls)],
+                                color=(0, 255, 255))
                     
                     source.display_frame(self._annotator.result())
 
