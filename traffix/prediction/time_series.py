@@ -3,7 +3,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from traffix.utils.time_series_utils import DataProcessor, DataLoader
+from traffix.utils.time_series_utils import DataLoader
 
 
 

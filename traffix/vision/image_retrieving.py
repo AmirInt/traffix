@@ -13,6 +13,10 @@ class ImageRetriever:
 
         self._name = name
 
+        #cv.namedWindow(self._name, cv.WINDOW_AUTOSIZE)
+
+        #cv.resizeWindow(self._name, 328, 247)
+
         if source == "camera":
             self._source = cv.VideoCapture(0)
         else:
@@ -46,6 +50,7 @@ class ImageRetriever:
                 if display:
                     cv.imshow(self._name, self._last_frame)
                     if cv.waitKey(wait_time) == ord('q'):
+                        self._running = False
                         break
                 else:
                     sleep(wait_time / 1000.0)

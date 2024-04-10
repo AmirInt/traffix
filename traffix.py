@@ -6,6 +6,7 @@ from traffix.vision.vehicle_counting import VehicleCounter
 from traffix.utils.time_series_utils import DataProcessor
 from traffix.prediction.time_series import Predictor
 from traffix.schedule.scheduling import Scheduler
+from traffix.utils.interface import Interface, DisplayCanvas, SumCanvas
 
 
 
@@ -27,8 +28,10 @@ if __name__ == "__main__":
         traffic_count_recorders = []
         traffic_predictors = []
     
+        interface = Interface()
+
         # Initialise video sources and traffic viewers
-        for view in config["views"]:
+        for idx, view in enumerate(config["views"]):
         
             videos.append(
                 ImageRetriever(
@@ -45,6 +48,7 @@ if __name__ == "__main__":
                 VehicleCounter(
                     config["vehicle_counter"]["yolo_weights"],
                     roi,
+                    interface.get_display_canvas(idx),
                     config["vehicle_counter"]["target_classes"]))
 
             vehicle_counter_threads.append(
@@ -88,7 +92,8 @@ if __name__ == "__main__":
                 path.append(line)
             paths.append(path)
 
-        scheduler = Scheduler(paths,
+        scheduler = Scheduler(interface,
+                              paths,
                               config["scheduler"]["schedule_period"],
                               history_depth,
                               prediction_depth)
@@ -101,7 +106,11 @@ if __name__ == "__main__":
             vehicle_counter_thread.daemon = True
             vehicle_counter_thread.start()
 
-        scheduler.run_schedule()
+        schedule_thread = Thread(target=scheduler.run_schedule)
+        schedule_thread.daemon = True
+        schedule_thread.start()
+
+        interface.run_main_loop()
 
     except KeyboardInterrupt:
         print("Stopping vehicle counters...")

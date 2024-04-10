@@ -31,6 +31,7 @@
     <Compile Include="traffix\prediction\__init__.py" />
     <Compile Include="traffix\schedule\scheduling.py" />
     <Compile Include="traffix\schedule\__init__.py" />
+    <Compile Include="traffix\utils\interface.py" />
     <Compile Include="traffix\utils\time_series_utils.py" />
     <Compile Include="traffix\utils\video_utils.py" />
     <Compile Include="traffix\utils\__init__.py" />

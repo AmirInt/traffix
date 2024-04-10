@@ -7,7 +7,7 @@ views:
             x2: 200
             y1: 0
             y2: 200
-        fps: 25.01
+        fps: 15.0
 
     -
         name: south
@@ -17,7 +17,7 @@ views:
             x2: 300
             y1: 0
             y2: 200
-        fps: 25.01
+        fps: 15.0
 
     -
         name: east
@@ -27,7 +27,7 @@ views:
             x2: 200
             y1: 0
             y2: 200
-        fps: 25.01
+        fps: 15.0
 
     -
         name: west
@@ -37,11 +37,11 @@ views:
             x2: 300
             y1: 0
             y2: 200
-        fps: 25.01
+        fps: 15.0
 
 
 vehicle_counter:
-    yolo_weights: yolo_weights/yolov8x.pt
+    yolo_weights: yolo_weights/yolov8s.pt
     target_classes:
         - car
         - truck

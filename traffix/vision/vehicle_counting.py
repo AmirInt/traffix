@@ -5,6 +5,7 @@ from ultralytics.utils.plotting import Annotator
 from ultralytics.engine.results import Results
 from ultralytics.engine.results import Boxes
 from traffix.vision.image_retrieving import ImageRetriever
+from traffix.utils.interface import DisplayCanvas
 
 
 
@@ -56,6 +57,7 @@ class VehicleCounter:
             self,
             yolo_model: os.PathLike,
             roi: tuple,
+            canvas: DisplayCanvas,
             target_classes: set = {}) -> None:
         
         if len(roi) != 2 or len(roi[0]) != 2 or len(roi[1]) != 2:
@@ -69,6 +71,7 @@ class VehicleCounter:
         self._track_history = {}
         self._current_vehicle_count = 0
         self._passing_vehicles_id_set = set({})
+        self._canvas = canvas
 
 
     def process_frame(self, frame: np.ndarray) -> Results:
@@ -91,7 +94,7 @@ class VehicleCounter:
             return boxes
         
         boxes_np = np.array(
-                [box.data for box in boxes if self._model.names[int(box.cls)] in self._target_classes])
+                [box.data.cpu() for box in boxes if self._model.names[int(box.cls)] in self._target_classes])
 
         if boxes_np.shape[0]:
             filtered_boxes = Boxes(
@@ -109,20 +112,24 @@ class VehicleCounter:
         track_history = {}
         filtered_boxes = []
 
-        for box in boxes:
-            detection = Detection(
-                int(box.id),
-                int((box.xyxy[0][0] + box.xyxy[0][2]) / 2),
-                int((box.xyxy[0][1] + box.xyxy[0][3]) / 2))
-            try:
-                detection.compare(self._track_history[detection.get_id()])
-            except KeyError:
-                pass
+        if boxes.shape[0]:
+            for box in boxes:
+                try:
+                    detection = Detection(
+                        int(box.id),
+                        int((box.xyxy[0][0] + box.xyxy[0][2]) / 2),
+                        int((box.xyxy[0][1] + box.xyxy[0][3]) / 2))
+                    try:
+                        detection.compare(self._track_history[detection.get_id()])
+                    except KeyError:
+                        pass
 
-            track_history[detection.get_id()] = detection
+                    track_history[detection.get_id()] = detection
             
-            if detection.get_avg_dir()[1] > 0:
-                filtered_boxes.append(box.data)
+                    if detection.get_avg_dir()[1] > 0:
+                        filtered_boxes.append(box.data)
+                except TypeError:
+                    pass
 
         self._track_history = track_history
 
@@ -149,7 +156,7 @@ class VehicleCounter:
                     if filtered_boxes is None:
                         self._current_vehicle_count = 0
                     else:
-                        self._passing_vehicles_id_set.update([int(box.id) for box in results[0].boxes])
+                        self._passing_vehicles_id_set.update([int(box.id) for box in filtered_boxes])
 
                         self._current_vehicle_count = len(filtered_boxes)
 
@@ -158,20 +165,22 @@ class VehicleCounter:
                             self._annotator.box_label(
                                 box.xyxy[0],
                                 self._model.names[int(box.cls)],
-                                color=(0, 255, 255))
-                    
-                    source.display_frame(self._annotator.result())
+                                color=(160, 0, 160))
+
+                    # Update the display
+                    self._canvas.update(img=self._annotator.result(),
+                                        current_flow=len(self._passing_vehicles_id_set) * 10) # TODO: Remove the multiplication by 10, this is for the demonstration purposes
 
         except KeyboardInterrupt:
             print("Finishing...")
 
 
     def get_current_count(self) -> int:
-        return self._current_vehicle_count
+        return self._current_vehicle_count * 10 # TODO: Remove the multiplication by 10, this is for the demonstration purposes
 
 
     def get_last_count(self) -> int:
-        return len(self._passing_vehicles_id_set)
+        return len(self._passing_vehicles_id_set) * 10 # TODO: Remove the multiplication by 10, this is for the demonstration purposes
 
 
     def clear_count(self) -> None:
