@@ -13,10 +13,6 @@ class ImageRetriever:
 
         self._name = name
 
-        #cv.namedWindow(self._name, cv.WINDOW_AUTOSIZE)
-
-        #cv.resizeWindow(self._name, 328, 247)
-
         if source == "camera":
             self._source = cv.VideoCapture(0)
         else:
