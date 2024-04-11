@@ -24,7 +24,7 @@ class Scheduler:
 
     def get_traffic_counts(self, path_idx: int, line_idx: int, line: tuple) -> None:
 
-        current_vehicle_count = line[0].get_last_count()
+        current_vehicle_count = line[0].get_current_count()
         line[1].append_data_point(line[0].get_last_count())
         line[0].clear_count()
         history = line[1].get_range((-self._history_depth,))

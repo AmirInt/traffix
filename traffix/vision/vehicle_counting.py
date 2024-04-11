@@ -169,7 +169,7 @@ class VehicleCounter:
 
                     # Update the display
                     self._canvas.update(img=self._annotator.result(),
-                                        current_flow=len(self._passing_vehicles_id_set) * 10) # TODO: Remove the multiplication by 10, this is for the demonstration purposes
+                                        current_flow=self._current_vehicle_count * 10) # TODO: Remove the multiplication by 10, this is for the demonstration purposes
 
         except KeyboardInterrupt:
             print("Finishing...")
