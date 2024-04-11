@@ -10,7 +10,7 @@ There are various methodologies going around developing effective smart traffic 
 - Scheduler
 
 Here is the bigger picture flowchart of the three modules and their relations.
-<img src="./assets/modules.png"/>
+<img width=600vw src="./assets/modules.png"/>
 
 ## Components
 
@@ -18,7 +18,7 @@ Here is the bigger picture flowchart of the three modules and their relations.
 
 The traffic predictor makes use of the traffic flow history of an incoming line to predict its future flow for multiple steps. We've developed an LSTM model for this purpose.
 
-<img src="./assets/predictor.png"/>
+<img width=600vw src="./assets/predictor.png"/>
 
 Using the above model architecture, considering IL=168, OL=24, H=4 and S=1, and using the <a href="https://data.ny.gov/Transportation/Thruway-E-ZPass-Cash-Hourly-Usage-by-Plaza-Beginni/2hz2-2s5g/about_data">Thruway</a> dataset, we achieved an average MSE of 1.72%.
 
@@ -34,11 +34,11 @@ The scheduler uses relatively simple mathematical equations to consider current 
 
 Considering the following structure of an intersection, where the opposite lines are synced in terms of traffic light signal phases:
 
-<img width=30vw src="./assets/intersection.png"/>
+<img width="300vw" src="./assets/intersection.png"/>
 
 The software' architecture will be as follows:
 
-<img src="./assets/architecture.png"/>
+<img width=600vw src="./assets/architecture.png"/>
 
 Note that the architecture's scheme is the same in all cases but the number of incoming lines and their sync relations are completely flexible and configurable via the `config.yaml` file.
 
@@ -46,4 +46,4 @@ Note that the architecture's scheme is the same in all cases but the number of i
 
 Here is a simple demonstration of the application's performance on the mentioned datasets. Note that since the Thruway and KoPER datasets were different essetially and their traffic numbers didn't match, we have scaled the live traffic monitoring count up by a factor of 10 to make the simulation more realistic.
 
-<video width=60vw src="./assets/2024-04-11-08-35-06.mp4"></video>
+<video width=600vw src="./assets/2024-04-11-08-35-06.mp4"></video>
