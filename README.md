@@ -4,24 +4,24 @@
 
 <h2>Introduction</h2>
 
-<p>There are various methodologies going around developing effective smart traffic lights. Such as using the genetic algorithm or VANETs. But in this project we've decided to take into account the current and future traffic flows of the lines to schedule the green signal phases of the traffic light. Thus, the software consists of three modules:</p>
+<p style="text-align: justify">There are various methodologies going around developing effective smart traffic lights. Such as using the genetic algorithm or VANETs. But in this project we've decided to take into account the current and future traffic flows of the lines to schedule the green signal phases of the traffic light. Thus, the software consists of three modules:</p>
 <ul>
 <li>Traffic predictor</li>
 <li>Traffic counter</li>
 <li>Scheduler</li>
 </ul>
-<p>Here is the bigger picture flowchart of the three modules and their relations.</p>
+<p style="text-align: justify">Here is the bigger picture flowchart of the three modules and their relations.</p>
 <img src="./assets/modules.png" class="image"/>
 
 <h2>Components</h2>
 
 <h3>Traffic Predictor</h3>
 
-<p>The traffic predictor makes use of the traffic flow history of an incoming line to predict its future flow for multiple steps. We've developed an LSTM model for this purpose.</p>
+<p style="text-align: justify">The traffic predictor makes use of the traffic flow history of an incoming line to predict its future flow for multiple steps. We've developed an LSTM model for this purpose.</p>
 
 <img src="./assets/predictor.png" class="image"/>
 
-<p>Using the above model architecture, considering IL=168, OL=24, H=4 and S=1, and using the <a href="https://data.ny.gov/Transportation/Thruway-E-ZPass-Cash-Hourly-Usage-by-Plaza-Beginni/2hz2-2s5g/about_data">Thruway</a> dataset, we achieved an average MSE of 1.72%.</p>
+<p style="text-align: justify">Using the above model architecture, considering IL=168, OL=24, H=4 and S=1, and using the <a href="https://data.ny.gov/Transportation/Thruway-E-ZPass-Cash-Hourly-Usage-by-Plaza-Beginni/2hz2-2s5g/about_data">Thruway</a> dataset, we achieved an average MSE of 1.72%.</p>
 
 <h3>Traffic Counter</h3>
 
