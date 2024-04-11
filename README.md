@@ -46,4 +46,5 @@ Note that the architecture's scheme is the same in all cases but the number of i
 
 Here is a simple demonstration of the application's performance on the mentioned datasets. Note that since the Thruway and KoPER datasets were different essetially and their traffic numbers didn't match, we have scaled the live traffic monitoring count up by a factor of 10 to make the simulation more realistic.
 
-https://drive.google.com/file/d/1NCsx6SupszUPYqaHINdGzUmfeda_aQn0/view?usp=sharing
+https://github.com/AmirInt/traffix/assets/61346161/65405db0-f9b9-474b-a416-a2f79dcb63d3
+
