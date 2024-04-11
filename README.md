@@ -1,29 +1,6 @@
-<div>
-
-<style>
-
-	p {
-		text-align: justify
-	}
-
-	.image {
-		display: block;
-		width: 60vw;
-		margin-left: auto;
-		margin-right: auto;
-		margin-top: 5vh;
-		margin-bottom: 5vh;
-	}
-	
-	#intersection {
-		width: 30vw;
-	}
-
-</style>
-
 <h1>Traffix</h1>
 
-<p>Traffix focuses on developing smart traffic lights. Smart traffic lights are ones that adapt their timings and schedules based on the incoming traffic flow from the different lines of an intersection.</p>
+<p style="text-align: justify">Traffix focuses on developing smart traffic lights. Smart traffic lights are ones that adapt their timings and schedules based on the incoming traffic flow from the different lines of an intersection.</p>
 
 <h2>Introduction</h2>
 
@@ -71,4 +48,5 @@
 <p>Here is a simple demonstration of the application's performance on the mentioned datasets. Note that since the Thruway and KoPER datasets were different essetially and their traffic numbers didn't match, we have scaled the live traffic monitoring count up by a factor of 10 to make the simulation more realistic.</p>
 
 <video src="./assets/2024-04-11-08-35-06.mp4" class="image"></video>
+
 </div>
