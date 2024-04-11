@@ -43,7 +43,6 @@
   <ItemGroup>
     <Content Include=".gitattributes" />
     <Content Include=".gitignore" />
-    <Content Include="assets\2024-04-11-08-35-06.mp4" />
     <Content Include="assets\architecture.png" />
     <Content Include="assets\intersection.png" />
     <Content Include="assets\modules.png" />

@@ -34,7 +34,7 @@ The scheduler uses relatively simple mathematical equations to consider current 
 
 Considering the following structure of an intersection, where the opposite lines are synced in terms of traffic light signal phases:
 
-<img width="300vw" src="./assets/intersection.png"/>
+<img width=300vw src="./assets/intersection.png"/>
 
 The software' architecture will be as follows:
 
@@ -46,4 +46,4 @@ Note that the architecture's scheme is the same in all cases but the number of i
 
 Here is a simple demonstration of the application's performance on the mentioned datasets. Note that since the Thruway and KoPER datasets were different essetially and their traffic numbers didn't match, we have scaled the live traffic monitoring count up by a factor of 10 to make the simulation more realistic.
 
-<video width=600vw src="./assets/2024-04-11-08-35-06.mp4"></video>
+<video width=600vw src="https://drive.google.com/file/d/1NCsx6SupszUPYqaHINdGzUmfeda_aQn0/view?usp=sharing"/>
